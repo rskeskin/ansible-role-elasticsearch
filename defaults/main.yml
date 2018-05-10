@@ -1,0 +1,42 @@
+---
+# Copyright 2018, Yildiz Technical University Computer Engineering Department
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+es_package_url: "https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch"
+es_conf_dir: "/etc/elasticsearch"
+sysd_script: "/usr/lib/systemd/system/elasticsearch.service"
+init_script: "/etc/init.d/elasticsearch"
+
+es_major_version: "6.x"
+es_apt_key: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+es_apt_url: "deb https://artifacts.elastic.co/packages/{{ es_major_version }}/apt stable main"
+es_templates: false
+es_user: elasticsearch
+es_group: elasticsearch
+es_config: {}
+es_config_log4j2: log4j2.properties.j2
+#Need to provide default directories
+es_pid_dir: "/var/run/elasticsearch"
+es_data_dirs: "/var/lib/elasticsearch"
+es_log_dir: "/var/log/elasticsearch"
+es_max_open_files: 65536
+es_max_threads: 8192
+es_max_map_count: 262144
+
+#These are used for internal operations performed by ansible.
+#They do not affect the current configuration
+es_api_host: "localhost"
+es_api_port: 9200
+es_debian_startup_timeout: 10
+es_jvm_custom_parameters: ''
