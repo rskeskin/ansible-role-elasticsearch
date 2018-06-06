@@ -13,6 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: Edit vm.max_map_count for elasticsearch (persistent)
+  hosts: log_hosts
+  gather_facts: "{{ osa_gather_facts | default(True) }}"
+  user: root
+  tasks:
+    - name: edit vm.max_map_count in sysctl
+      lineinfile:
+        dest: /etc/sysctl.conf
+        line: "vm.max_map_count=262144"
+    - name: activate sysctl
+      shell: sysctl -p
+
 - name: Install elasticsearch
   hosts: elasticsearch_all
   gather_facts: "{{ osa_gather_facts | default(True) }}"
@@ -31,6 +43,9 @@
     - include: common-tasks/package-cache-proxy.yml
   roles:
     - role: "elasticsearch"
+      es_config: {
+        network.host: "0.0.0.0"
+      }
     - role: "system_crontab_coordination"
       tags:
         - crontab
